@@ -12,13 +12,13 @@ class GamesController < ApplicationController
   def score
     found = check_dictionary(params[:word])["found"]
     in_grid = grid_check?(params[:word], params[:grid]) #here grid is passed in new with hidden value due to no model yet.
-
     if in_grid == false
       @result = "Sorry <b>#{params[:word]}</b> can't be built out of #{params[:grid]}"
     elsif in_grid && !found
       @result = "The word is valid according to the grid, but is not a valid English word"
     elsif found && in_grid
-      @result = "<b>Congratulations!</b> #{params[:word]} is a valid English word!"
+      session[:points] += params[:word].length ** 2
+      @result = "<b>Congratulations!</b> #{params[:word]} is a valid English word! Your total score is #{session[:points]}"
     end
   end
 
@@ -33,5 +33,4 @@ class GamesController < ApplicationController
       grid.include?(letter) && attempt.upcase.chars.count(letter) <= grid.count(letter)
     end
   end
-
 end
