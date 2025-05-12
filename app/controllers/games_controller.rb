@@ -14,11 +14,11 @@ class GamesController < ApplicationController
     in_grid = grid_check?(params[:word], params[:grid]) #here grid is passed in new with hidden value due to no model yet.
 
     if in_grid == false
-      @result = "The word can’t be built out of the original grid"
+      @result = "Sorry <b>#{params[:word]}</b> can't be built out of #{params[:grid]}"
     elsif in_grid && !found
       @result = "The word is valid according to the grid, but is not a valid English word"
     elsif found && in_grid
-      @result = "Congratulations #{params[:word]} is a valid English word!"
+      @result = "<b>Congratulations!</b> #{params[:word]} is a valid English word!"
     end
   end
 
